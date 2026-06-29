@@ -1,0 +1,25 @@
+{
+  "name": "humandraft",
+  "version": "0.1.0",
+  "description": "A practical writing critique engine for reducing AI slop, broken causality, and unsupported claims.",
+  "type": "module",
+  "bin": {
+    "humandraft": "./src/cli.mjs"
+  },
+  "scripts": {
+    "audit": "node src/cli.mjs audit",
+    "test": "node --test"
+  },
+  "keywords": [
+    "writing",
+    "ai-writing",
+    "editor",
+    "prose-linter",
+    "anti-slop",
+    "storytelling"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}
