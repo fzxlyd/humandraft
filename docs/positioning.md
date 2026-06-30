@@ -21,12 +21,12 @@ This document explains the market map and why HumanDraft is different.
 
 ## HumanDraft's Position
 
-HumanDraft is not primarily a humanizer.
+HumanDraft is not primarily a humanizer, and it is not merely a detector.
 
-It is a writing critique engine:
+It is a writing workbench:
 
 ```text
-draft -> audit -> findings -> rewrite contract -> constrained rewrite
+brief -> style pack -> draft -> audit -> findings -> rewrite contract -> constrained rewrite
 ```
 
 That means HumanDraft should:
@@ -52,11 +52,10 @@ Most humanizers operate after the damage is done. They try to disguise generated
 HumanDraft aims to make the writing process accountable:
 
 - before drafting: require evidence and voice examples
-- during drafting: apply profile-specific rules
+- during drafting: apply style packs and profile-specific rules
 - after drafting: produce findings and rewrite contracts
 - later: connect to editor tools and team rule packs
 
 ## Product Rule
 
 If a feature cannot explain *why* a draft is bad, it does not belong in the critique core.
-

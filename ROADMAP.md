@@ -3,6 +3,9 @@
 ## 0.1 Deterministic Critique Core
 
 - [x] CLI audit command
+- [x] CLI compose command
+- [x] structured brief input
+- [x] built-in style packs
 - [x] built-in anti-slop rules
 - [x] `qiba` food-science short-video profile
 - [x] Markdown report

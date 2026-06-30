@@ -57,6 +57,23 @@ node src/cli.mjs audit samples/qiba-ai-ish.md --profile qiba
 - 抽象词过多、具体动作不足
 - 针对 `qiba` 这类食物科普短视频脚本的证据风险
 
+## 当前也能写什么
+
+HumanDraft 现在有一个最小 `compose` 命令，可以从结构化 brief 生成初稿，并立即自审：
+
+```bash
+node src/cli.mjs compose samples/brief-qiba-soup.json --style oral --profile qiba
+```
+
+它支持的第一批风格：
+
+- `plain`：说人话，清楚直接
+- `oral`：适合口播，能朗读
+- `elevated`：更高级一点的编辑腔，但不能空
+- `taste`：更重画面感、记忆点和审美判断
+
+这个写稿能力还只是骨架，但方向已经变了：写稿和审稿必须绑在一起，不能写完一堆废话再靠 humanizer 粉饰。
+
 ## 项目方向
 
 长期目标不是做一个“帮你一键生成爆款”的工具，而是做一个写作工作台：

@@ -49,6 +49,8 @@ The first release is a deterministic CLI that finds visible writing failures and
 HumanDraft currently ships with:
 
 - a local CLI
+- structured brief-to-draft composition
+- style packs for plain, oral, elevated, and taste-first writing
 - built-in anti-slop rules
 - profile-specific checks
 - Markdown reports
@@ -60,6 +62,12 @@ Example:
 
 ```bash
 node src/cli.mjs audit samples/qiba-ai-ish.md --profile qiba
+```
+
+Compose from a structured brief:
+
+```bash
+node src/cli.mjs compose samples/brief-qiba-soup.json --style oral --profile qiba
 ```
 
 Output:
@@ -97,6 +105,15 @@ No API key is required for the current audit engine.
 | `qiba` | Food-science short-video script checks |
 | `story` | Early causality and reveal checks |
 | `research` | Evidence and citation-risk checks |
+
+## Style Packs
+
+| Style | Use It When You Need |
+|---|---|
+| `plain` | clear human language without official tone |
+| `oral` | a script that can be read aloud naturally |
+| `elevated` | a calmer, more editorial voice |
+| `taste` | stronger imagery, texture, and memorability |
 
 ## What HumanDraft Catches
 
@@ -137,10 +154,10 @@ HumanDraft borrows the best ideas from stronger open-source writing and research
 The synthesis is simple:
 
 ```text
-research pack -> memory ledger -> critique -> rewrite contract -> constrained rewrite
+brief -> prompt enhancement -> style pack -> draft -> critique -> rewrite contract -> constrained rewrite
 ```
 
-The current MVP implements the critique layer first.
+The current MVP implements the critique layer and the first draft-composition skeleton.
 
 ## Project Structure
 
@@ -158,9 +175,12 @@ docs/
 src/
   audit.mjs             Rule engine
   cli.mjs               CLI entry point
+  compose.mjs           Brief-to-draft pipeline skeleton
   report.mjs            Markdown report rendering
   rules.mjs             Built-in rule catalog
+  style-packs.mjs       Built-in writing styles
 samples/
+  brief-qiba-soup.json  Example structured writing brief
   qiba-ai-ish.md        Example text to audit
 test/
   audit.test.mjs        Minimal regression tests

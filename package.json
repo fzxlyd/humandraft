@@ -1,7 +1,7 @@
 {
   "name": "humandraft",
   "version": "0.1.0",
-  "description": "A practical writing critique engine for reducing AI slop, broken causality, and unsupported claims.",
+  "description": "An open writing workbench for composing, auditing, and rewriting AI-assisted drafts with less slop and more taste.",
   "type": "module",
   "homepage": "https://github.com/fzxlyd/humandraft#readme",
   "repository": {
