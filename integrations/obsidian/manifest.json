@@ -1,0 +1,9 @@
+{
+  "id": "humandraft",
+  "name": "HumanDraft",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Send selected text to a local HumanDraft server and insert a generated brief.",
+  "author": "HumanDraft contributors",
+  "isDesktopOnly": true
+}

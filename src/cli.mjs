@@ -3,39 +3,73 @@
 import { readFile } from "node:fs/promises";
 import { basename } from "node:path";
 import { auditText } from "./audit.mjs";
+import { generateBrief, renderBriefJson, knownTemplates } from "./brief.mjs";
 import { composeDraft } from "./compose.mjs";
 import { renderMarkdownReport } from "./report.mjs";
 import { knownProfiles } from "./rules.mjs";
 import { knownStyles } from "./style-packs.mjs";
 
 async function main(argv) {
-  const [command, filePath, ...rest] = argv;
+  const [command, ...rest] = argv;
 
   if (!command || command === "help" || command === "--help") {
     printHelp();
     return;
   }
 
-  if (!["audit", "compose"].includes(command)) {
+  if (!["audit", "compose", "brief", "write", "web", "templates"].includes(command)) {
     throw new Error(`Unknown command "${command}".`);
   }
 
-  if (!filePath) {
-    throw new Error("Missing file path.");
+  if (command === "templates") {
+    process.stdout.write(renderTemplates());
+    return;
   }
 
-  const profile = readOption(rest, "--profile") ?? "general";
+  const cliProfile = readOption(rest, "--profile");
 
   if (command === "audit") {
+    const filePath = firstPositional(rest);
+    if (!filePath) throw new Error("Missing file path.");
     const text = await readFile(filePath, "utf8");
+    const profile = cliProfile ?? "general";
     const result = auditText(text, { profile });
     process.stdout.write(renderMarkdownReport(result, basename(filePath)));
     return;
   }
 
+  if (command === "brief") {
+    const template = readOption(rest, "--template");
+    const style = readOption(rest, "--style");
+    const demand = positional(rest).join(" ");
+    const brief = generateBrief(demand, { profile: cliProfile, style, template });
+    process.stdout.write(renderBriefJson(brief));
+    return;
+  }
+
+  if (command === "write") {
+    const template = readOption(rest, "--template");
+    const style = readOption(rest, "--style");
+    const demand = positional(rest).join(" ");
+    const brief = generateBrief(demand, { profile: cliProfile, style, template });
+    const result = composeDraft(brief, { profile: brief.profile, style: brief.style });
+    process.stdout.write(renderComposeReport(result, "one-line-demand"));
+    return;
+  }
+
+  if (command === "web") {
+    const port = Number(readOption(rest, "--port") ?? "8787");
+    const host = readOption(rest, "--host") ?? "127.0.0.1";
+    const { startServer } = await import("./server.mjs");
+    await startServer({ host, port });
+    return;
+  }
+
+  const filePath = firstPositional(rest);
+  if (!filePath) throw new Error("Missing file path.");
   const style = readOption(rest, "--style");
   const brief = JSON.parse(await readFile(filePath, "utf8"));
-  const result = composeDraft(brief, { profile, style });
+  const result = composeDraft(brief, { profile: cliProfile, style });
 
   process.stdout.write(renderComposeReport(result, basename(filePath)));
 }
@@ -43,6 +77,25 @@ async function main(argv) {
 function readOption(args, name) {
   const index = args.indexOf(name);
   return index === -1 ? undefined : args[index + 1];
+}
+
+function positional(args) {
+  const values = [];
+
+  for (let index = 0; index < args.length; index += 1) {
+    const value = args[index];
+    if (value.startsWith("--")) {
+      index += 1;
+      continue;
+    }
+    values.push(value);
+  }
+
+  return values;
+}
+
+function firstPositional(args) {
+  return positional(args)[0];
 }
 
 function renderComposeReport(result, sourceName) {
@@ -73,14 +126,28 @@ function printHelp() {
   process.stdout.write(`HumanDraft
 
 Usage:
-  node src/cli.mjs audit <file> [--profile ${knownProfiles.join("|")}]
-  node src/cli.mjs compose <brief.json> [--style ${knownStyles.join("|")}] [--profile ${knownProfiles.join("|")}]
+  humandraft audit <file> [--profile ${knownProfiles.join("|")}]
+  humandraft brief "<one-line demand>" [--template ${knownTemplates.join("|")}] [--profile ${knownProfiles.join("|")}]
+  humandraft write "<one-line demand>" [--template ${knownTemplates.join("|")}] [--style ${knownStyles.join("|")}]
+  humandraft compose <brief.json> [--style ${knownStyles.join("|")}] [--profile ${knownProfiles.join("|")}]
+  humandraft web [--port 8787]
+  humandraft templates
 
 Examples:
-  node src/cli.mjs audit samples/qiba-ai-ish.md --profile qiba
-  node src/cli.mjs compose samples/brief-qiba-soup.json --style oral --profile qiba
-  node src/cli.mjs audit draft.md --profile story
+  npx humandraft audit samples/qiba-ai-ish.md --profile qiba
+  npx humandraft brief "琦爸酒食，隔夜菜到底能不能吃" --profile qiba
+  npx humandraft write "给我故事：骨头汤补钙" --profile qiba --template story
+  npx humandraft web --port 8787
 `);
+}
+
+function renderTemplates() {
+  return [
+    "HumanDraft templates:",
+    "",
+    ...knownTemplates.map((template) => `- ${template}`),
+    ""
+  ].join("\n");
 }
 
 main(process.argv.slice(2)).catch((error) => {

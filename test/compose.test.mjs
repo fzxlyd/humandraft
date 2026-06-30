@@ -31,3 +31,27 @@ test("composeDraft writes a draft and audits it", () => {
 test("composeDraft rejects unknown styles", () => {
   assert.throws(() => composeDraft({ title: "x" }, { style: "fog" }), /Unknown style/);
 });
+
+test("composeDraft renders story template", () => {
+  const result = composeDraft(
+    {
+      title: "Qiba story",
+      format: "story",
+      profile: "qiba",
+      style: "taste",
+      topic: "骨头汤补钙",
+      scene: {
+        who: "一位顾客",
+        action: "把保温桶放到桌边",
+        line: "这汤给孩子补钙。"
+      },
+      beats: ["顾客带着老说法进店", "琦爸没有反驳，只问汤怎么喝", "结尾停在孩子把牛奶推回来的动作"],
+      turn: "琦爸把问题从补不补拉回到怎么吃。",
+      takeaway: "汤可以喝，补钙别只靠汤。"
+    },
+    { style: "taste", profile: "qiba" }
+  );
+
+  assert.match(result.draft, /## 故事/);
+  assert.match(result.draft, /Style Contract/);
+});

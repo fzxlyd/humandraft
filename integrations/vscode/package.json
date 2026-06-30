@@ -1,0 +1,36 @@
+{
+  "name": "humandraft-vscode",
+  "displayName": "HumanDraft",
+  "description": "Run HumanDraft brief, write, and web UI commands from VS Code.",
+  "version": "0.1.0",
+  "publisher": "humandraft",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "activationEvents": [
+    "onCommand:humandraft.openWebUi",
+    "onCommand:humandraft.briefFromSelection",
+    "onCommand:humandraft.writeFromSelection"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "humandraft.openWebUi",
+        "title": "HumanDraft: Open Web UI"
+      },
+      {
+        "command": "humandraft.briefFromSelection",
+        "title": "HumanDraft: Brief From Selection"
+      },
+      {
+        "command": "humandraft.writeFromSelection",
+        "title": "HumanDraft: Write From Selection"
+      }
+    ]
+  },
+  "categories": [
+    "Other"
+  ],
+  "license": "MIT"
+}

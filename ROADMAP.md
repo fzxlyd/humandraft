@@ -4,15 +4,23 @@
 
 - [x] CLI audit command
 - [x] CLI compose command
+- [x] CLI brief command from one-line demand
+- [x] CLI write command from one-line demand
+- [x] CLI web command
 - [x] structured brief input
 - [x] built-in style packs
+- [x] built-in writing templates
 - [x] built-in anti-slop rules
 - [x] `qiba` food-science short-video profile
 - [x] Markdown report
+- [x] local Web UI
+- [x] starter VS Code integration
+- [x] starter Obsidian integration
 - [x] minimal tests
 
 ## 0.2 Rule Packs
 
+- [ ] publish npm package so `npx humandraft ...` resolves without the GitHub prefix
 - [ ] load custom YAML or JSON rules
 - [ ] add `story` profile with causality and motivation checks
 - [ ] add `research` profile with claim/evidence checks
@@ -35,8 +43,10 @@
 
 ## 0.5 Editor Integrations
 
-- [ ] VS Code extension
-- [ ] Obsidian plugin
+- [x] VS Code starter extension
+- [x] Obsidian starter plugin
+- [ ] package VS Code extension
+- [ ] package Obsidian plugin
 - [ ] clipboard/system tray prototype
 
 ## 0.6 Humanizer Compatibility

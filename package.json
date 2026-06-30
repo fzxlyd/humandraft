@@ -14,8 +14,20 @@
   "bin": {
     "humandraft": "./src/cli.mjs"
   },
+  "files": [
+    "assets",
+    "docs",
+    "integrations",
+    "samples",
+    "src",
+    "web",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
   "scripts": {
     "audit": "node src/cli.mjs audit",
+    "web": "node src/cli.mjs web",
     "test": "node --test"
   },
   "keywords": [

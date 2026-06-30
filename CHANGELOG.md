@@ -9,3 +9,7 @@
 - Added Markdown report output.
 - Added sample draft and regression tests.
 - Added project docs, logo, roadmap, and contribution guidelines.
+- Added one-line brief generation, `write`, `web`, and `templates` CLI commands.
+- Added local Web UI with brief, compose, and audit endpoints.
+- Added templates for short video, public-account articles, oral scripts, stories, and science explainers.
+- Added starter VS Code and Obsidian integrations.

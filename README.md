@@ -49,11 +49,16 @@ The first release is a deterministic CLI that finds visible writing failures and
 HumanDraft currently ships with:
 
 - a local CLI
+- `npx humandraft ...` command shape
+- one-line demand to structured brief generation
 - structured brief-to-draft composition
+- templates for short video, public-account articles, oral scripts, stories, and science explainers
 - style packs for plain, oral, elevated, and taste-first writing
 - built-in anti-slop rules
 - profile-specific checks
 - Markdown reports
+- a local Web UI
+- starter VS Code and Obsidian integrations
 - a `qiba` profile for food-science short-video scripts
 - regression tests
 - documentation for the broader product direction
@@ -61,13 +66,31 @@ HumanDraft currently ships with:
 Example:
 
 ```bash
-node src/cli.mjs audit samples/qiba-ai-ish.md --profile qiba
+npx humandraft audit samples/qiba-ai-ish.md --profile qiba
 ```
 
 Compose from a structured brief:
 
 ```bash
-node src/cli.mjs compose samples/brief-qiba-soup.json --style oral --profile qiba
+npx humandraft compose samples/brief-qiba-soup.json --style oral --profile qiba
+```
+
+Generate a brief from one line:
+
+```bash
+npx humandraft brief "琦爸酒食，给我故事：骨头汤补钙" --profile qiba --template story
+```
+
+Generate a draft from one line:
+
+```bash
+npx humandraft write "琦爸酒食，给我故事：骨头汤补钙" --profile qiba --template story
+```
+
+Run the local Web UI:
+
+```bash
+npx humandraft web --port 8787
 ```
 
 Output:
@@ -92,7 +115,15 @@ Replace vague drama with observed action, source-backed claims, and a calmer voi
 git clone https://github.com/fzxlyd/humandraft.git
 cd humandraft
 npm test
-node src/cli.mjs audit samples/qiba-ai-ish.md --profile qiba
+npm link
+humandraft audit samples/qiba-ai-ish.md --profile qiba
+humandraft web
+```
+
+Before the package is published to npm, remote users can run the GitHub version:
+
+```bash
+npx github:fzxlyd/humandraft write "琦爸酒食，给我故事：隔夜菜到底能不能吃" --profile qiba --template story
 ```
 
 No API key is required for the current audit engine.
@@ -114,6 +145,16 @@ No API key is required for the current audit engine.
 | `oral` | a script that can be read aloud naturally |
 | `elevated` | a calmer, more editorial voice |
 | `taste` | stronger imagery, texture, and memorability |
+
+## Templates
+
+| Template | Use It For |
+|---|---|
+| `short-video` | visible short-video scripts with beats and shot hints |
+| `public-account` | WeChat/public-account article drafts |
+| `oral-script` | speakable口播稿 |
+| `story` | human situations, pressure, turn, and aftertaste |
+| `science` | evidence-bounded explainers |
 
 ## What HumanDraft Catches
 
@@ -167,6 +208,7 @@ assets/
   terminal-demo.svg     README demo graphic
 docs/
   architecture.md       System design
+  integrations.md       CLI, Web UI, and editor integration notes
   landscape.md          Open-source project analysis
   positioning.md        Category map and differentiation
   product-blueprint.md  Product thesis and roadmap
@@ -174,11 +216,19 @@ docs/
   zh-CN.md              Chinese introduction
 src/
   audit.mjs             Rule engine
+  brief.mjs             One-line demand to structured brief
   cli.mjs               CLI entry point
   compose.mjs           Brief-to-draft pipeline skeleton
   report.mjs            Markdown report rendering
   rules.mjs             Built-in rule catalog
   style-packs.mjs       Built-in writing styles
+  templates.mjs         Built-in writing templates
+  server.mjs            Local Web UI and JSON endpoints
+web/
+  index.html            Browser UI
+integrations/
+  vscode/               VS Code starter extension
+  obsidian/             Obsidian starter plugin
 samples/
   brief-qiba-soup.json  Example structured writing brief
   qiba-ai-ish.md        Example text to audit
@@ -196,7 +246,7 @@ Near-term priorities:
 - add stronger `story` and `research` profiles
 - generate rewrite contracts from findings
 - support JSON output for editor integrations
-- add VS Code / Obsidian integrations
+- harden VS Code / Obsidian integrations into packaged releases
 
 ## 中文说明
 
@@ -211,8 +261,9 @@ See [docs/using-for-our-stories.md](docs/using-for-our-stories.md) for a practic
 Example:
 
 ```bash
-node src/cli.mjs compose samples/brief-qiba-story.json --style oral --profile qiba
-node src/cli.mjs compose samples/brief-gate7.json --style elevated --profile story
+npx humandraft compose samples/brief-qiba-story.json --style oral --profile qiba
+npx humandraft compose samples/brief-gate7.json --style elevated --profile story
+npx humandraft write "琦爸酒食，给我故事：骨头汤补钙" --profile qiba --template story
 ```
 
 ## Contributing
