@@ -111,6 +111,18 @@ No API key is required for the current audit engine.
 
 ## What Makes It Different
 
+HumanDraft is not a replacement for humanizer tools. Humanizers usually rewrite the surface of a draft. HumanDraft tries to expose the failure underneath.
+
+| Tool Type | What It Usually Does | HumanDraft's Difference |
+|---|---|---|
+| Humanizer | Rewrites text to sound less AI-generated | Shows the exact rule, evidence, and reason before rewriting |
+| AI detector | Scores whether text looks AI-written | Turns the diagnosis into actionable editorial tasks |
+| Prompt enhancer | Improves the starting prompt | Audits drafts after generation and supports reusable rule packs |
+| Taste/style skill | Adds voice, texture, or memorability | Makes taste criteria inspectable and testable |
+| Full writing agent | Automates the whole writing pipeline | Keeps critique separate from generation so the writer stays in control |
+
+See [docs/positioning.md](docs/positioning.md) for the broader category map.
+
 HumanDraft borrows the best ideas from stronger open-source writing and research systems:
 
 - [PaperDebugger](https://github.com/PaperDebugger/paperdebugger): editor-side multi-agent review
@@ -139,6 +151,7 @@ assets/
 docs/
   architecture.md       System design
   landscape.md          Open-source project analysis
+  positioning.md        Category map and differentiation
   product-blueprint.md  Product thesis and roadmap
   project-catalog.md    Project-by-project notes
   zh-CN.md              Chinese introduction

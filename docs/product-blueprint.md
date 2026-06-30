@@ -72,6 +72,7 @@ Output:
 3. It treats evidence as a writing dependency.
 4. It checks everyday scene logic, not only grammar.
 5. It is open and inspectable.
+6. It can absorb humanizer, detector, taste, style-memory, and prompt-enhancement workflows without becoming a black box.
 
 ## Roadmap
 
@@ -114,6 +115,13 @@ Acceptance: the rewritten paragraph must include who, where, and what changed.
 - system clipboard tool
 - optional web UI
 
+### Phase 5: Humanizer Compatibility Layer
+
+- compare a draft before/after external humanizer tools
+- keep an audit trail of what changed
+- flag rewrites that remove facts, voice, or scene logic
+- support "rewrite only after critique" workflows
+
 ## Non-Goals
 
 - One-click viral content generator
@@ -121,4 +129,3 @@ Acceptance: the rewritten paragraph must include who, where, and what changed.
 - Generic grammar checker
 - SEO content farm
 - Pure chatbot interface
-

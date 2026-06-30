@@ -14,6 +14,7 @@
 - [ ] add `story` profile with causality and motivation checks
 - [ ] add `research` profile with claim/evidence checks
 - [ ] add false-positive suppression comments
+- [ ] document humanizer/detector/taste/style tool categories and map them to HumanDraft modules
 
 ## 0.3 Rewrite Contracts
 
@@ -35,3 +36,9 @@
 - [ ] Obsidian plugin
 - [ ] clipboard/system tray prototype
 
+## 0.6 Humanizer Compatibility
+
+- [ ] compare external rewrites against original drafts
+- [ ] detect fact loss during "humanization"
+- [ ] detect voice flattening during "polish"
+- [ ] produce an editorial diff report
