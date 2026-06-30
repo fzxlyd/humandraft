@@ -3,6 +3,14 @@
   "version": "0.1.0",
   "description": "A practical writing critique engine for reducing AI slop, broken causality, and unsupported claims.",
   "type": "module",
+  "homepage": "https://github.com/fzxlyd/humandraft#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fzxlyd/humandraft.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fzxlyd/humandraft/issues"
+  },
   "bin": {
     "humandraft": "./src/cli.mjs"
   },

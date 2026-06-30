@@ -1,0 +1,19 @@
+<svg width="960" height="540" viewBox="0 0 960 540" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">HumanDraft CLI demo</title>
+  <desc id="desc">A terminal-style demo showing HumanDraft catching AI-sounding phrases.</desc>
+  <rect width="960" height="540" rx="28" fill="#0B1020"/>
+  <rect x="32" y="32" width="896" height="476" rx="18" fill="#111827" stroke="#334155" stroke-width="2"/>
+  <circle cx="62" cy="62" r="8" fill="#EF4444"/>
+  <circle cx="88" cy="62" r="8" fill="#F59E0B"/>
+  <circle cx="114" cy="62" r="8" fill="#22C55E"/>
+  <text x="54" y="112" fill="#E5E7EB" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="22">$ humandraft audit draft.md --profile qiba</text>
+  <text x="54" y="158" fill="#93C5FD" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="22">HumanDraft Audit: draft.md</text>
+  <text x="54" y="198" fill="#F9FAFB" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">Profile: qiba     Score: 42/100</text>
+  <rect x="54" y="226" width="852" height="62" rx="10" fill="#7F1D1D"/>
+  <text x="76" y="264" fill="#FECACA" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">high  fake-suspense: "you won't believe" has no concrete stakes</text>
+  <rect x="54" y="304" width="852" height="62" rx="10" fill="#78350F"/>
+  <text x="76" y="342" fill="#FDE68A" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">med   ai-cliche: "in today's fast-paced world" says nothing</text>
+  <rect x="54" y="382" width="852" height="62" rx="10" fill="#7F1D1D"/>
+  <text x="76" y="420" fill="#FECACA" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">high  unsupported-authority: "research shows" needs a source card</text>
+  <text x="54" y="478" fill="#A7F3D0" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">Rewrite contract: replace vague drama with observed action + evidence.</text>
+</svg>
