@@ -45,3 +45,11 @@
 - [ ] detect fact loss during "humanization"
 - [ ] detect voice flattening during "polish"
 - [ ] produce an editorial diff report
+
+## 0.7 Story Project Bibles
+
+- [ ] add project-bible input
+- [ ] add episode-brief schema
+- [ ] add `qiba-story` profile
+- [ ] add `gate7` profile
+- [ ] add hard rejection gates for story logic and world rules

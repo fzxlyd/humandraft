@@ -204,6 +204,17 @@ Near-term priorities:
 
 HumanDraft 的核心不是“帮你一键生成文章”，而是帮你抓出 AI 文本里最容易被人看穿的问题：假悬念、空话、无证据权威口吻、人物没常识、因果断裂。
 
+## Using It For Story Projects
+
+See [docs/using-for-our-stories.md](docs/using-for-our-stories.md) for a practical workflow for projects like `琦爸酒食` and `7号关口`.
+
+Example:
+
+```bash
+node src/cli.mjs compose samples/brief-qiba-story.json --style oral --profile qiba
+node src/cli.mjs compose samples/brief-gate7.json --style elevated --profile story
+```
+
 ## Contributing
 
 Useful contributions include:
