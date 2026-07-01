@@ -13,3 +13,5 @@
 - Added local Web UI with brief, compose, and audit endpoints.
 - Added templates for short video, public-account articles, oral scripts, stories, and science explainers.
 - Added starter VS Code and Obsidian integrations.
+- Added unified quality gates with blocker/warning status, deslop gate stack, and deterministic writing score.
+- Added project bible scaffolding for reusable IP tracking and Qiba-specific gates.

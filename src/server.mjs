@@ -3,7 +3,10 @@ import { readFile } from "node:fs/promises";
 import { generateBrief } from "./brief.mjs";
 import { composeDraft } from "./compose.mjs";
 import { auditText } from "./audit.mjs";
+import { runDeslopGates } from "./deslop-gates.mjs";
+import { runQualityGate, renderGateReport } from "./gate.mjs";
 import { renderMarkdownReport } from "./report.mjs";
+import { scoreText } from "./score.mjs";
 
 const INDEX_URL = new URL("../web/index.html", import.meta.url);
 
@@ -54,6 +57,28 @@ async function handleRequest(request, response) {
         ...result,
         markdown: renderMarkdownReport(result, "web-input")
       });
+      return;
+    }
+
+    if (request.method === "POST" && request.url === "/api/gate") {
+      const body = await readJson(request);
+      const result = runQualityGate(body.text ?? "", { profile: body.profile ?? "general" });
+      sendJson(response, 200, {
+        ...result,
+        markdown: renderGateReport(result, "web-input")
+      });
+      return;
+    }
+
+    if (request.method === "POST" && request.url === "/api/score") {
+      const body = await readJson(request);
+      sendJson(response, 200, scoreText(body.text ?? "", { profile: body.profile ?? "general" }));
+      return;
+    }
+
+    if (request.method === "POST" && request.url === "/api/deslop") {
+      const body = await readJson(request);
+      sendJson(response, 200, { gates: runDeslopGates(body.text ?? "") });
       return;
     }
 

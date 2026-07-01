@@ -7,9 +7,16 @@
 - [x] CLI brief command from one-line demand
 - [x] CLI write command from one-line demand
 - [x] CLI web command
+- [x] CLI gate command with blockers/warnings
+- [x] CLI score command
+- [x] CLI deslop command
+- [x] CLI init command for project bible scaffolding
 - [x] structured brief input
 - [x] built-in style packs
 - [x] built-in writing templates
+- [x] deslop gate stack inspired by mature writing workflows
+- [x] deterministic writing score rubric
+- [x] lightweight project bible scaffold
 - [x] built-in anti-slop rules
 - [x] `qiba` food-science short-video profile
 - [x] Markdown report
@@ -24,6 +31,8 @@
 - [ ] load custom YAML or JSON rules
 - [ ] add `story` profile with causality and motivation checks
 - [ ] add `research` profile with claim/evidence checks
+- [ ] add project-bible driven gates for recurring IPs such as `qiba`
+- [ ] read project bible files during `write` and `gate`
 - [ ] add false-positive suppression comments
 - [ ] document humanizer/detector/taste/style tool categories and map them to HumanDraft modules
 

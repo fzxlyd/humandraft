@@ -178,6 +178,7 @@
         <button id="brief">Generate brief</button>
         <button class="secondary" id="compose">Generate draft</button>
         <button class="ghost" id="audit">Audit output</button>
+        <button class="ghost" id="gate">Run quality gate</button>
         <div class="status" id="status"></div>
       </section>
 
@@ -202,6 +203,14 @@
 
       $("audit").addEventListener("click", async () => {
         const result = await post("/api/audit", {
+          text: $("output").textContent,
+          profile: $("profile").value
+        });
+        $("output").textContent = result.markdown;
+      });
+
+      $("gate").addEventListener("click", async () => {
+        const result = await post("/api/gate", {
           text: $("output").textContent,
           profile: $("profile").value
         });

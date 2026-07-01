@@ -53,6 +53,7 @@ HumanDraft currently ships with:
 - one-line demand to structured brief generation
 - structured brief-to-draft composition
 - templates for short video, public-account articles, oral scripts, stories, and science explainers
+- quality gates inspired by serious writing pipelines: blockers, warnings, scoring, and deslop checks
 - style packs for plain, oral, elevated, and taste-first writing
 - built-in anti-slop rules
 - profile-specific checks
@@ -67,6 +68,30 @@ Example:
 
 ```bash
 npx humandraft audit samples/qiba-ai-ish.md --profile qiba
+```
+
+Run the full gate before publishing:
+
+```bash
+npx humandraft gate draft.md --profile qiba
+```
+
+Score the draft against a writing rubric:
+
+```bash
+npx humandraft score draft.md --profile qiba
+```
+
+Run the deslop gate stack:
+
+```bash
+npx humandraft deslop draft.md
+```
+
+Initialize a project bible and tracking files:
+
+```bash
+npx humandraft init ./qiba-project --profile qiba
 ```
 
 Compose from a structured brief:
@@ -219,8 +244,12 @@ src/
   brief.mjs             One-line demand to structured brief
   cli.mjs               CLI entry point
   compose.mjs           Brief-to-draft pipeline skeleton
+  deslop-gates.mjs      Six-gate anti-slop diagnosis
+  gate.mjs              Unified blockers/warnings quality gate
+  project-bible.mjs     Project bible and tracking scaffold
   report.mjs            Markdown report rendering
   rules.mjs             Built-in rule catalog
+  score.mjs             Deterministic writing score rubric
   style-packs.mjs       Built-in writing styles
   templates.mjs         Built-in writing templates
   server.mjs            Local Web UI and JSON endpoints
@@ -247,6 +276,7 @@ Near-term priorities:
 - generate rewrite contracts from findings
 - support JSON output for editor integrations
 - harden VS Code / Obsidian integrations into packaged releases
+- make project-bible files feed back into `brief`, `write`, and `gate`
 
 ## 中文说明
 

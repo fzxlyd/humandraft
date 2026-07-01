@@ -5,8 +5,12 @@ import { basename } from "node:path";
 import { auditText } from "./audit.mjs";
 import { generateBrief, renderBriefJson, knownTemplates } from "./brief.mjs";
 import { composeDraft } from "./compose.mjs";
+import { runDeslopGates } from "./deslop-gates.mjs";
+import { runQualityGate, renderGateReport } from "./gate.mjs";
+import { initProjectBible } from "./project-bible.mjs";
 import { renderMarkdownReport } from "./report.mjs";
 import { knownProfiles } from "./rules.mjs";
+import { scoreText } from "./score.mjs";
 import { knownStyles } from "./style-packs.mjs";
 
 async function main(argv) {
@@ -17,7 +21,7 @@ async function main(argv) {
     return;
   }
 
-  if (!["audit", "compose", "brief", "write", "web", "templates"].includes(command)) {
+  if (!["audit", "compose", "brief", "write", "gate", "score", "deslop", "init", "web", "templates"].includes(command)) {
     throw new Error(`Unknown command "${command}".`);
   }
 
@@ -35,6 +39,46 @@ async function main(argv) {
     const profile = cliProfile ?? "general";
     const result = auditText(text, { profile });
     process.stdout.write(renderMarkdownReport(result, basename(filePath)));
+    return;
+  }
+
+  if (command === "gate") {
+    const filePath = firstPositional(rest);
+    if (!filePath) throw new Error("Missing file path.");
+    const text = await readFile(filePath, "utf8");
+    const profile = cliProfile ?? "general";
+    const result = runQualityGate(text, { profile });
+    process.stdout.write(renderGateReport(result, basename(filePath)));
+    if (result.status === "blocked") process.exitCode = 2;
+    if (result.status === "warn") process.exitCode = 1;
+    return;
+  }
+
+  if (command === "score") {
+    const filePath = firstPositional(rest);
+    if (!filePath) throw new Error("Missing file path.");
+    const text = await readFile(filePath, "utf8");
+    const profile = cliProfile ?? "general";
+    const result = scoreText(text, { profile });
+    process.stdout.write(renderScoreReport(result, basename(filePath)));
+    return;
+  }
+
+  if (command === "deslop") {
+    const filePath = firstPositional(rest);
+    if (!filePath) throw new Error("Missing file path.");
+    const text = await readFile(filePath, "utf8");
+    const result = runDeslopGates(text);
+    process.stdout.write(renderDeslopReport(result, basename(filePath)));
+    return;
+  }
+
+  if (command === "init") {
+    const projectDir = firstPositional(rest);
+    const profile = cliProfile ?? "general";
+    const force = rest.includes("--force");
+    const result = await initProjectBible(projectDir, { profile, force });
+    process.stdout.write(renderInitReport(result));
     return;
   }
 
@@ -127,6 +171,10 @@ function printHelp() {
 
 Usage:
   humandraft audit <file> [--profile ${knownProfiles.join("|")}]
+  humandraft gate <file> [--profile ${knownProfiles.join("|")}]
+  humandraft score <file> [--profile ${knownProfiles.join("|")}]
+  humandraft deslop <file>
+  humandraft init <project-dir> [--profile ${knownProfiles.join("|")}] [--force]
   humandraft brief "<one-line demand>" [--template ${knownTemplates.join("|")}] [--profile ${knownProfiles.join("|")}]
   humandraft write "<one-line demand>" [--template ${knownTemplates.join("|")}] [--style ${knownStyles.join("|")}]
   humandraft compose <brief.json> [--style ${knownStyles.join("|")}] [--profile ${knownProfiles.join("|")}]
@@ -135,10 +183,69 @@ Usage:
 
 Examples:
   npx humandraft audit samples/qiba-ai-ish.md --profile qiba
+  npx humandraft gate draft.md --profile qiba
+  npx humandraft score draft.md --profile qiba
+  npx humandraft init ./qiba-project --profile qiba
   npx humandraft brief "琦爸酒食，隔夜菜到底能不能吃" --profile qiba
   npx humandraft write "给我故事：骨头汤补钙" --profile qiba --template story
   npx humandraft web --port 8787
 `);
+}
+
+function renderInitReport(result) {
+  return [
+    `# HumanDraft Project Initialized`,
+    "",
+    `Project: \`${result.projectDir}\``,
+    `Profile: \`${result.profile}\``,
+    "",
+    "## Written",
+    "",
+    ...(result.written.length === 0 ? ["- none"] : result.written.map((file) => `- ${file}`)),
+    "",
+    "## Skipped",
+    "",
+    ...(result.skipped.length === 0 ? ["- none"] : result.skipped.map((file) => `- ${file}`)),
+    ""
+  ].join("\n");
+}
+
+function renderScoreReport(result, sourceName) {
+  return [
+    `# HumanDraft Score: ${sourceName}`,
+    "",
+    `Profile: \`${result.profile}\``,
+    `Score: **${result.score}/100**`,
+    `Status: **${result.status}**`,
+    "",
+    "## Dimensions",
+    "",
+    ...result.dimensions.map((item) => `- ${item.label}: ${item.score}/${item.max}`),
+    "",
+    "## Weak Dimensions",
+    "",
+    ...(result.weak.length === 0 ? ["- none"] : result.weak.map((item) => `- ${item}`)),
+    ""
+  ].join("\n");
+}
+
+function renderDeslopReport(gates, sourceName) {
+  return [
+    `# HumanDraft Deslop Gates: ${sourceName}`,
+    "",
+    ...gates.map((currentGate) => [
+      `## ${currentGate.label}`,
+      "",
+      `Status: **${currentGate.status}**`,
+      `Advice: ${currentGate.advice}`,
+      "",
+      ...(currentGate.issues.length === 0
+        ? ["- none"]
+        : currentGate.issues.map((issue) => `- \`${issue.evidence}\``)),
+      ""
+    ].join("\n")),
+    ""
+  ].join("\n");
 }
 
 function renderTemplates() {
